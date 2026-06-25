@@ -1,6 +1,5 @@
 /* =============================================
    SCRIPT.JS — Matrix Romántica
-   Inspirado en la galaxia, adaptado para Matrix
    ============================================= */
 'use strict';
 
@@ -8,7 +7,7 @@
 // DOM REFS
 // ════════════════════════════════════════════
 let matrixCanvas, matrixCtx;
-let terminalContent;
+let terminalText;
 let fraseTexto;
 let clickCanvas, clickCtx;
 let finalModal, finalTitulo, finalSubtitulo, finalFoto, finalMensaje, finalFxCanvas, finalFxCtx;
@@ -39,7 +38,7 @@ function resolveDomRefs() {
   matrixCanvas = document.getElementById('matrixCanvas');
   matrixCtx = matrixCanvas.getContext('2d');
 
-  terminalContent = document.getElementById('terminalContent');
+  terminalText = document.getElementById('terminalText');
 
   fraseTexto = document.getElementById('fraseTexto');
 
@@ -86,19 +85,18 @@ function resizeAll() {
 // ════════════════════════════════════════════
 let matrixColumns = [];
 let matrixRunning = false;
-const MATRIX_FALL_SPEED = 0.8;
 
 function initMatrix() {
   const cfg = CONFIG.matrixFalling;
-  const cols = Math.floor(matrixCanvas.width / (cfg.fontSize + 4));
+  const cols = Math.floor(matrixCanvas.width / (cfg.fontSize + 4) * cfg.density);
   matrixColumns = [];
 
   for (let i = 0; i < cols; i++) {
     const isPhrase = Math.random() < cfg.fraseProbability;
     matrixColumns.push({
-      x: i * (cfg.fontSize + 4) + Math.random() * 10,
+      x: Math.random() * matrixCanvas.width,
       y: Math.random() * matrixCanvas.height * -1,
-      speed: cfg.fallSpeed + Math.random() * 0.5,
+      speed: cfg.fallSpeed + Math.random() * 0.8,
       chars: isPhrase ? getRandomFrase() : getRandomChars(),
       isPhrase: isPhrase,
       charIndex: 0,
@@ -119,7 +117,7 @@ function getRandomFrase() {
 
 function getRandomChars() {
   const chars = CONFIG.matrixFalling.caracteres;
-  const len = 5 + Math.floor(Math.random() * 15);
+  const len = 8 + Math.floor(Math.random() * 20);
   let result = '';
   for (let i = 0; i < len; i++) {
     result += chars[Math.floor(Math.random() * chars.length)];
@@ -136,14 +134,14 @@ function loopMatrix() {
   if (!matrixRunning) return;
 
   const cfg = CONFIG.matrixFalling;
-  matrixCtx.fillStyle = 'rgba(26, 10, 26, 0.08)';
+  matrixCtx.fillStyle = 'rgba(26, 10, 26, 0.06)';
   matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
 
   matrixColumns.forEach(col => {
     col.y += col.speed;
 
-    if (col.y > matrixCanvas.height + 20) {
-      col.y = -20;
+    if (col.y > matrixCanvas.height + 50) {
+      col.y = -50;
       col.isPhrase = Math.random() < cfg.fraseProbability;
       col.chars = col.isPhrase ? getRandomFrase() : getRandomChars();
       col.x = Math.random() * matrixCanvas.width;
@@ -158,14 +156,13 @@ function loopMatrix() {
     matrixCtx.textAlign = 'center';
 
     if (col.isPhrase) {
-      // Sombra suave para las frases
       matrixCtx.shadowColor = col.color;
       matrixCtx.shadowBlur = 8;
       matrixCtx.fillText(col.chars, col.x, col.y);
       matrixCtx.shadowBlur = 0;
     } else {
       const idx = Math.floor(col.y / col.size) % col.chars.length;
-      matrixCtx.fillText(col.chars[idx] || '💗', col.x, col.y);
+      matrixCtx.fillText(col.chars[idx] || '0', col.x, col.y);
     }
   });
 
@@ -175,7 +172,7 @@ function loopMatrix() {
 }
 
 // ════════════════════════════════════════════
-// 2. TERMINAL IZQUIERDA
+// 2. TERMINAL IZQUIERDA (SOLO TEXTO)
 // ════════════════════════════════════════════
 let terminalLines = [];
 let terminalLineIndex = 0;
@@ -197,13 +194,13 @@ function loopTerminal() {
     const line = terminalLines[terminalLineIndex];
     const currentText = line.substring(0, terminalCharIndex);
 
-    const lines = terminalContent.innerHTML.split('<br>');
+    const lines = terminalText.innerHTML.split('<br>');
     if (lines.length > terminalLineIndex) {
       lines[terminalLineIndex] = `<span class="line">${currentText}</span>`;
     } else {
       lines.push(`<span class="line">${currentText}</span>`);
     }
-    terminalContent.innerHTML = lines.join('<br>');
+    terminalText.innerHTML = lines.join('<br>');
 
     terminalCharIndex++;
 
@@ -221,7 +218,7 @@ function loopTerminal() {
 }
 
 // ════════════════════════════════════════════
-// 3. FRASES CENTRALES
+// 3. FRASES CENTRALES (más lentas)
 // ════════════════════════════════════════════
 let fraseIndex = 0;
 let fraseCharIndex = 0;
@@ -322,7 +319,6 @@ function loopFinalFx() {
 
   ctx.clearRect(0, 0, finalFxCanvas.width, finalFxCanvas.height);
 
-  // Confeti
   finalConfeti.forEach(c => {
     c.y += c.speed;
     c.x += c.drift + Math.sin(c.y / 50) * 0.5;
@@ -342,7 +338,6 @@ function loopFinalFx() {
     ctx.restore();
   });
 
-  // Corazones flotando
   finalCorazones.forEach(c => {
     c.y -= c.speed;
     c.x += Math.sin(c.y / 30) * 0.3;
@@ -386,7 +381,7 @@ function iniciarFinalFx() {
 }
 
 // ════════════════════════════════════════════
-// 5. REPRODUCTOR DE MÚSICA (igual que la galaxia)
+// 5. REPRODUCTOR DE MÚSICA
 // ════════════════════════════════════════════
 function initPlayer() {
   if (!CONFIG.canciones.length) return;
@@ -471,64 +466,62 @@ function fmtTime(s) {
 }
 
 // ════════════════════════════════════════════
-// 6. CLICK PARTICLES (igual que la galaxia)
+// 6. CLICK PARTICLES (COPIADO EXACTO DE LA GALAXIA)
 // ════════════════════════════════════════════
 let clickParticles = [];
-let clickRunning = false;
-const MAX_PARTICLES = 300;
+let clickFxLoopRunning = false;
+const MAX_CLICK_PARTICLES = 500;
 
 function initClickParticles() {
   document.addEventListener('click', (e) => {
     if (finalActive) return;
     if (e.target.closest('#playerWrap, #playerPanel, #playerToggle')) return;
-    spawnClickParticles(e.clientX, e.clientY, 12);
+    spawnClickParticles(e.clientX, e.clientY, 32);
   });
   document.addEventListener('touchstart', (e) => {
     if (finalActive) return;
     if (e.target.closest('#playerWrap, #playerPanel, #playerToggle')) return;
     const t = e.touches[0];
-    spawnClickParticles(t.clientX, t.clientY, 12);
+    spawnClickParticles(t.clientX, t.clientY, 32);
   }, { passive: true });
 }
 
 function spawnClickParticles(x, y, count) {
-  const safe = Math.min(count, 12);
+  const safeCount = Math.min(count, 15);
   const emojis = CONFIG.emojisClick;
   const frases = CONFIG.frasesClic;
 
-  for (let i = 0; i < safe; i++) {
-    if (clickParticles.length >= MAX_PARTICLES) break;
+  for (let i = 0; i < safeCount; i++) {
+    if (clickParticles.length >= MAX_CLICK_PARTICLES) break;
 
-    const isEmoji = Math.random() > 0.5;
+    const useEmoji = Math.random() > 0.4;
     const angle = Math.random() * Math.PI * 2;
-    const speed = 1 + Math.random() * 3;
+    const speed = Math.random() * 3.4 + 1.4;
 
     clickParticles.push({
-      x,
-      y,
+      x, y,
       vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed - 1,
+      vy: Math.sin(angle) * speed - 1.5,
+      gravity: 0.05,
       life: 1,
-      decay: 0.015 + Math.random() * 0.015,
-      size: isEmoji ? 18 + Math.random() * 14 : 14 + Math.random() * 10,
-      text: isEmoji
+      decay: 0.022,
+      size: useEmoji ? (Math.random() * 14 + 16) : (Math.random() * 5 + 11),
+      text: useEmoji
         ? emojis[Math.floor(Math.random() * emojis.length)]
         : frases[Math.floor(Math.random() * frases.length)],
-      isEmoji,
+      isEmoji: useEmoji,
       color: CONFIG.colores[Math.floor(Math.random() * CONFIG.colores.length)],
-      gravity: 0.04,
     });
   }
 
-  if (!clickRunning) {
-    clickRunning = true;
-    loopClickParticles();
+  if (!clickFxLoopRunning) {
+    clickFxLoopRunning = true;
+    requestAnimationFrame(loopClickParticles);
   }
 }
 
 function loopClickParticles() {
   clickCtx.clearRect(0, 0, clickCanvas.width, clickCanvas.height);
-
   clickCtx.textAlign = 'center';
   clickCtx.textBaseline = 'middle';
 
@@ -544,7 +537,7 @@ function loopClickParticles() {
       continue;
     }
 
-    clickCtx.globalAlpha = p.life;
+    clickCtx.globalAlpha = Math.max(0, p.life);
     clickCtx.font = p.isEmoji
       ? `${p.size}px sans-serif`
       : `600 ${p.size}px 'Courier New', monospace`;
@@ -560,6 +553,6 @@ function loopClickParticles() {
   if (clickParticles.length > 0) {
     requestAnimationFrame(loopClickParticles);
   } else {
-    clickRunning = false;
+    clickFxLoopRunning = false;
   }
-}
+       }
