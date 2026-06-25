@@ -1,17 +1,16 @@
 /* =============================================
    CONFIG.JS — Matrix Romántica
-   TODA la personalización está aquí
+   Basado en la galaxia de corazones
    ============================================= */
 'use strict';
 
 const CONFIG = {
 
-  // ── COLORS (igual que la galaxia) ─────────
+  // ── COLORS (IGUAL que la galaxia) ─────────
   colores: ["#FFB6C1", "#FF6B81", "#FFD1DC", "#FFDAB9", "#FF85A2"],
 
   // ── MATRIX FALLING (frases y caracteres cayendo) ──
   matrixFalling: {
-    // FRASES ROMÁNTICAS que caerán en el fondo
     frases: [
       "Te amo May 💗",
       "Eres mi luz ✨",
@@ -32,16 +31,15 @@ const CONFIG = {
       "Siempre te amaré ✨",
       "Mi amor por ti es eterno 🌸",
     ],
-    // Caracteres que caerán (letras + números binarios + emojis)
     caracteres: "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345678901010101010101💗✨🌸❤️💕🌷💫🌹",
     fallSpeed: 0.8,
-    density: 0.9,            // MUCHA más densidad
+    density: 0.9,
     fontSize: 14,
     fontSizeFrases: 18,
-    fraseProbability: 0.15,  // 15% frases, 85% caracteres binarios
+    fraseProbability: 0.15,
   },
 
-  // ── TERMINAL IZQUIERDA (SOLO TEXTO) ──────
+  // ── TERMINAL IZQUIERDA ────────────────────
   terminal: {
     lines: [
       "> USER: May 💗",
@@ -54,7 +52,7 @@ const CONFIG = {
     lineDelay: 1000,
   },
 
-  // ── FRASES CENTRALES (más lentas) ────────
+  // ── FRASES CENTRALES ──────────────────────
   frasesCentrales: [
     "Desde que llegaste a mi vida, todo es más bonito 💗",
     "Cada día a tu lado es un regalo del universo ✨",
@@ -63,8 +61,8 @@ const CONFIG = {
     "Te amo más de lo que las palabras pueden expresar 💕",
     "Gracias por existir, May. Eres mi todo 💗",
   ],
-  fraseTypingSpeed: 120,     // MÁS LENTO (antes 60)
-  fraseDelay: 3000,          // MÁS ESPERA entre frases
+  fraseTypingSpeed: 120,
+  fraseDelay: 3000,
 
   // ── CELEBRACIÓN FINAL ──────────────────────
   final: {
