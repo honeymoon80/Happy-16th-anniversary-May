@@ -23,17 +23,25 @@ const CONFIG = {
       "Eres mi todo 🌹",
       "Amor sin fin 💗",
       "Eres mi sueño ✨",
+      "Contigo todo es mejor 🌸",
+      "Te elijo siempre 💗",
+      "Eres mi hogar 🏠",
+      "Mi corazón es tuyo ❤️",
+      "Gracias por existir 💕",
+      "Eres mi felicidad 💗",
+      "Siempre te amaré ✨",
+      "Mi amor por ti es eterno 🌸",
     ],
-    // Caracteres adicionales que caerán
-    caracteres: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789💗✨🌸❤️💕🌷💫🌹",
-    fallSpeed: 0.8,          // Velocidad de caída
-    density: 0.5,            // Cantidad de elementos (0-1)
-    fontSize: 14,            // Tamaño de caracteres
-    fontSizeFrases: 18,      // Tamaño de frases
-    fraseProbability: 0.25,  // 25% de que caiga una frase
+    // Caracteres que caerán (letras + números binarios + emojis)
+    caracteres: "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345678901010101010101💗✨🌸❤️💕🌷💫🌹",
+    fallSpeed: 0.8,
+    density: 0.9,            // MUCHA más densidad
+    fontSize: 14,
+    fontSizeFrases: 18,
+    fraseProbability: 0.15,  // 15% frases, 85% caracteres binarios
   },
 
-  // ── TERMINAL IZQUIERDA ────────────────────
+  // ── TERMINAL IZQUIERDA (SOLO TEXTO) ──────
   terminal: {
     lines: [
       "> USER: May 💗",
@@ -42,11 +50,11 @@ const CONFIG = {
       "> MESSAGE: Eres mi razón de ser...",
       "> SYSTEM: Conectado(a) 💕",
     ],
-    typingSpeed: 80,          // ms por letra
-    lineDelay: 1000,          // ms entre líneas
+    typingSpeed: 80,
+    lineDelay: 1000,
   },
 
-  // ── FRASES CENTRALES ──────────────────────
+  // ── FRASES CENTRALES (más lentas) ────────
   frasesCentrales: [
     "Desde que llegaste a mi vida, todo es más bonito 💗",
     "Cada día a tu lado es un regalo del universo ✨",
@@ -55,8 +63,8 @@ const CONFIG = {
     "Te amo más de lo que las palabras pueden expresar 💕",
     "Gracias por existir, May. Eres mi todo 💗",
   ],
-  fraseTypingSpeed: 60,      // ms por letra
-  fraseDelay: 2500,          // ms entre frases
+  fraseTypingSpeed: 120,     // MÁS LENTO (antes 60)
+  fraseDelay: 3000,          // MÁS ESPERA entre frases
 
   // ── CELEBRACIÓN FINAL ──────────────────────
   final: {
@@ -73,7 +81,7 @@ const CONFIG = {
     { nombre: "Para Siempre 💗", archivo: "cancion2.mp3" },
   ],
 
-  // ── CLICK PARTICLES (igual que la galaxia) ──
+  // ── CLICK PARTICLES (IGUAL que la galaxia) ──
   emojisClick: ["💗", "✨", "🌸", "🌷", "💫", "❤️‍🔥", "💞", "🦋"],
   frasesClic: ["Te amo May", "Eres mi todo", "Siempre juntos", "Mi amor eterno"],
   mensajeFinPlaylist: "Gracias por escuchar 💗",
