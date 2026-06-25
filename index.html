@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>💗 Matrix Romántica — May</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- FONDO MATRIX -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- TERMINAL IZQUIERDA -->
+    <div id="terminal">
+        <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">💗 TERMINAL ROMÁNTICO</span>
+        </div>
+        <div id="terminalContent"></div>
+        <div class="terminal-cursor">█</div>
+    </div>
+
+    <!-- FRASE CENTRAL -->
+    <div id="fraseContainer">
+        <div id="fraseTexto"></div>
+    </div>
+
+    <!-- REPRODUCTOR DE MÚSICA -->
+    <div id="playerWrap">
+        <div id="playerToggle">🎵</div>
+        <div id="playerPanel" class="minimized">
+            <div id="playerDisc">💿</div>
+            <div id="playerSongName">Cargando...</div>
+            <div id="playerControls">
+                <button id="playerPrev">⏮</button>
+                <button id="playerPlay">▶</button>
+                <button id="playerNext">⏭</button>
+            </div>
+            <div id="playerProgressTrack">
+                <div id="playerProgressFill"></div>
+                <div id="playerProgressThumb"></div>
+            </div>
+            <div id="playerTime">
+                <span id="playerCurTime">0:00</span>
+                <span id="playerTotalTime">0:00</span>
+            </div>
+            <input type="range" id="playerVol" min="0" max="1" step="0.01" value="0.7" />
+        </div>
+    </div>
+
+    <!-- CLICK PARTICLES -->
+    <canvas id="clickFxCanvas"></canvas>
+
+    <!-- CELEBRACIÓN FINAL -->
+    <div id="finalModal" class="hidden">
+        <div id="finalBackdrop"></div>
+        <div id="finalContent">
+            <h1 id="finalTitulo">🎉 ¡FELICES 16 MESES MAY! 🎉</h1>
+            <p id="finalSubtitulo">Gracias por cada sonrisa, cada abrazo y cada momento juntos 💗</p>
+            <div id="finalFotoWrap">
+                <img id="finalFoto" src="assets/img/aniversario16.webp" alt="Aniversario" />
+            </div>
+            <p id="finalMensaje">Eres el amor de mi vida. Te amo infinitamente.</p>
+            <canvas id="finalFxCanvas"></canvas>
+        </div>
+    </div>
+
+    <!-- AUDIO OCULTO -->
+    <audio id="galaxyAudio" preload="auto"></audio>
+
+    <!-- SCRIPTS -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
